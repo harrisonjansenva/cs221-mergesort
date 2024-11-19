@@ -1,4 +1,5 @@
 import java.util.Comparator;
+import java.util.ListIterator;
 
 /**
  * Class for sorting lists that implement the IndexedUnsortedList interface,
@@ -68,7 +69,48 @@ public class Sort
 	 */
 	private static <T extends Comparable<T>> void mergesort(IndexedUnsortedList<T> list)
 	{
-		// TODO: Implement recursive mergesort algorithm 
+		IndexedUnsortedList<T> list2 = newList();
+		if (list.size() < 2) {
+			return;
+		}
+		ListIterator<T> it = list.listIterator();
+		IndexedUnsortedList<T> leftList = newList();
+		IndexedUnsortedList<T> rightList = newList();
+
+		for (int i = 0; i < list.size() / 2; i++) {
+			leftList.add(it.next());
+
+		}
+		for (int i = list.size() / 2; i < list.size(); i++) {
+			rightList.add(it.next());
+		}
+		mergesort(leftList);
+		mergesort(rightList);
+		while (!leftList.isEmpty() && !rightList.isEmpty()) {
+			int check = leftList.first().compareTo(rightList.first());
+			if (leftList.first().compareTo(rightList.first()) < 0) {
+				list2.add(leftList.removeFirst());
+			} else {
+				list2.add(rightList.removeFirst());
+			}
+		}
+			while (!leftList.isEmpty()) {
+				list2.addToRear(leftList.removeFirst());
+			}
+			while (!rightList.isEmpty()) {
+				list2.addToRear(rightList.removeFirst());
+			}
+			ListIterator it1 = list.listIterator();
+			ListIterator it2 = list2.listIterator();
+			while (it1.hasNext()) {
+				it1.next();
+				it1.set(it2.next());
+			}
+
+
+
+
+
 	}
 		
 	/**
@@ -89,5 +131,5 @@ public class Sort
 		// TODO: Implement recursive mergesort algorithm using Comparator
 
 	}
-	
+
 }
