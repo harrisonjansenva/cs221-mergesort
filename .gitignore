@@ -3,3 +3,5 @@
 
 ## adding the /out folder
 /out
+## adding the mergesort.iml 
+*.iml
