@@ -87,7 +87,6 @@ public class Sort
 		mergesort(leftList);
 		mergesort(rightList);
 		while (!leftList.isEmpty() && !rightList.isEmpty()) {
-			int check = leftList.first().compareTo(rightList.first());
 			if (leftList.first().compareTo(rightList.first()) < 0) {
 				list2.add(leftList.removeFirst());
 			} else {
@@ -100,8 +99,8 @@ public class Sort
 			while (!rightList.isEmpty()) {
 				list2.addToRear(rightList.removeFirst());
 			}
-			ListIterator it1 = list.listIterator();
-			ListIterator it2 = list2.listIterator();
+			ListIterator<T> it1 = list.listIterator();
+			ListIterator<T> it2 = list2.listIterator();
 			while (it1.hasNext()) {
 				it1.next();
 				it1.set(it2.next());
@@ -129,6 +128,44 @@ public class Sort
 	private static <T> void mergesort(IndexedUnsortedList<T> list, Comparator<T> c)
 	{
 		// TODO: Implement recursive mergesort algorithm using Comparator
+		IndexedUnsortedList<T> list2 = newList();
+		if (list.size() < 2) {
+			return;
+		}
+		ListIterator<T> it = list.listIterator();
+		IndexedUnsortedList<T> leftList = newList();
+		IndexedUnsortedList<T> rightList = newList();
+
+		for (int i = 0; i < list.size() / 2; i++) {
+			leftList.add(it.next());
+
+		}
+		for (int i = list.size() / 2; i < list.size(); i++) {
+			rightList.add(it.next());
+		}
+		mergesort(leftList, c);
+		mergesort(rightList, c);
+		while (!leftList.isEmpty() && !rightList.isEmpty()) {
+			if (c.compare(leftList.first(), rightList.first()) < 0) {
+				list2.add(leftList.removeFirst());
+			}
+			else {
+				list2.add(rightList.removeFirst());
+			}
+		}
+		while (!leftList.isEmpty()) {
+			list2.addToRear(leftList.removeFirst());
+		}
+		while (!rightList.isEmpty()) {
+			list2.addToRear(rightList.removeFirst());
+		}
+		ListIterator<T> it1 = list.listIterator();
+		ListIterator<T> it2 = list2.listIterator();
+		while (it1.hasNext()) {
+			it1.next();
+			it1.set(it2.next());
+		}
+
 
 	}
 
