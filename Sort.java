@@ -127,7 +127,6 @@ public class Sort
 	 */
 	private static <T> void mergesort(IndexedUnsortedList<T> list, Comparator<T> c)
 	{
-		// TODO: Implement recursive mergesort algorithm using Comparator
 		IndexedUnsortedList<T> list2 = newList();
 		if (list.size() < 2) {
 			return;
